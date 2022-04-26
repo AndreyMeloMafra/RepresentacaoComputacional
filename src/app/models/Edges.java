@@ -1,4 +1,5 @@
-package app;
+package app.models;
+
 public class Edges {
 
     private int id;
@@ -58,9 +59,19 @@ public class Edges {
         result.append("|");
         result.append(this.weight);
         result.append(")");
-        result.append("\n");
-
 
         return result.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Edges)) {
+            return false;
+        }
+
+        Edges objectToCompair = (Edges) obj;
+
+        return objectToCompair.origin == this.origin
+                && objectToCompair.destiny == this.destiny;
     }
 }

@@ -1,6 +1,8 @@
-package app;
+package app.repositories;
 
 import java.util.LinkedList;
+
+import app.models.Vertices;
 
 public class VerticesRepository {
     private LinkedList<Vertices> vertices = new LinkedList<Vertices>();

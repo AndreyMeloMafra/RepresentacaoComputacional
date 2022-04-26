@@ -1,11 +1,14 @@
-package app;
+package app.repositories;
 
 import java.util.LinkedList;
+import java.util.List;
+
+import app.exceptions.VerticeNotFoundException;
 
 public class GrafoRepository {
-    LinkedList<VerticesRepository> vertices = new LinkedList<VerticesRepository>();
+    LinkedList<VerticesRepository> vertices = new LinkedList<>();
 
-    public LinkedList<VerticesRepository> getVertices() {
+    public List<VerticesRepository> getVertices() {
         return vertices;
     }
 
@@ -20,14 +23,18 @@ public class GrafoRepository {
     public VerticesRepository findById(int originId) {
         try {
             for (VerticesRepository verticesRepository : vertices) {
-                if (verticesRepository.getFirstElementId() == originId) {
+                if (compair(verticesRepository.getFirstElementId(), originId)) {
                     return verticesRepository;
                 }
             }
         } catch (Exception e) {
-            throw new Error();
+            throw new VerticeNotFoundException();
         }
         return null;
+    }
+
+    private boolean compair(int id, int idToCompair) {
+        return id == idToCompair;
     }
 
     @Override

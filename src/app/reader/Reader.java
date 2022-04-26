@@ -5,12 +5,12 @@ import java.io.BufferedReader;
 import java.io.File;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
-import app.Edges;
-import app.GrafoRepository;
-import app.Vertices;
-import app.VerticesRepository;
+import app.models.Edges;
+import app.models.Vertices;
+import app.repositories.EdgesRepository;
+import app.repositories.GrafoRepository;
+import app.repositories.VerticesRepository;
 
 /**
  *
@@ -18,101 +18,105 @@ import app.VerticesRepository;
  */
 public class Reader {
 
-    static LinkedList<Edges> listEdges = new LinkedList<Edges>();
-
     final File verticesDoc = new File("./src/app/reader/vertices.csv");
     final File edgesDoc = new File("./src/app/reader/edges.csv");
 
-    public boolean readDoc() {
-        boolean result = false;
+    FileReader verticeDoc;
+    BufferedReader readvertices;
+    FileReader edgeDoc;
+    BufferedReader readEdges;
 
+    public Reader() {
         try {
-            FileReader vertices = new FileReader(verticesDoc);
-            BufferedReader readvertices = new BufferedReader(vertices);
+            verticeDoc = new FileReader(verticesDoc);
+            readvertices = new BufferedReader(verticeDoc);
 
-            String line = readvertices.readLine();
-            while (line != null) {
-                line = readvertices.readLine();
-            }
-
-            result = true;
-            vertices.close();
-        } catch (IOException e) {
+            edgeDoc = new FileReader(edgesDoc);
+            readEdges = new BufferedReader(edgeDoc);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return result;
     }
 
-    public LinkedList<LinkedList<Edges>> fillList() {
-        String verticeDocLine = "";
-        String edgeDocLine = "";
+    public GrafoRepository fillList() {
+        GrafoRepository grafo = new GrafoRepository();
 
-        LinkedList<LinkedList<Edges>> list = new LinkedList<LinkedList<Edges>>();
         try {
-            FileReader verticeDoc = new FileReader(verticesDoc);
-            BufferedReader readvertices = new BufferedReader(verticeDoc);
+            generateMainVertices(readvertices, grafo);
+            generateEdges(grafo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            FileReader edgeDoc = new FileReader(edgesDoc);
-            BufferedReader readEdges = new BufferedReader(edgeDoc);
+        return grafo;
+    }
 
-            GrafoRepository grafo = new GrafoRepository();
+    private Vertices createVertice(String line) {
+        String[] vertices = line.split(",");
+        int verticeId = Integer.parseInt(vertices[0]);
+        String verticeName = vertices[1];
 
+        return new Vertices(verticeId, verticeName);
+    }
+
+    private Edges createEdge(String line) {
+        String[] edges = line.split(",");
+        int edgeId = Integer.parseInt(edges[0]);
+        int origin = Integer.parseInt(edges[1]);
+        int destiny = Integer.parseInt(edges[2]);
+        double weight = Double.parseDouble(edges[3]);
+
+        return new Edges(edgeId, origin, destiny, weight);
+    }
+
+    private void generateMainVertices(BufferedReader reader, GrafoRepository grafo) throws IOException {
+        String line = "";
+        try {
             do {
-                verticeDocLine = readvertices.readLine();
-                if (verticeDocLine == null) {
+                line = reader.readLine();
+                
+                if (line == null) {
                     break;
                 }
 
-                String[] vertices = verticeDocLine.split(",");
-                int verticeId = Integer.parseInt(vertices[0]);
-                String verticeName = vertices[1];
-
-                Vertices vertice = createVertice(verticeId, verticeName);
+                Vertices vertice = createVertice(line);
                 VerticesRepository verticeRepository = new VerticesRepository(vertice);
 
                 grafo.addMainVertice(verticeRepository);
-            } while (verticeDocLine != null);
-            verticeDoc.close();
+            } while (line != null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void generateEdges(GrafoRepository grafo) {
+        String line = "";
+
+        EdgesRepository edgesRepository = new EdgesRepository();
+
+        try {
             do {
-                edgeDocLine = readEdges.readLine();
-                if (edgeDocLine == null) {
+                line = readEdges.readLine();
+                if (line == null) {
                     break;
                 }
 
-                String[] edges = edgeDocLine.split(",");
-                int edgeId = Integer.parseInt(edges[0]);
-                int origin = Integer.parseInt(edges[1]);
-                int destiny = Integer.parseInt(edges[2]);
-                double weight = Double.parseDouble(edges[3]);
+                Edges edgeCreated = createEdge(line);
 
-                createEdge(edgeId, origin, destiny, weight);
+                edgesRepository.add(edgeCreated);
 
-                VerticesRepository verticeRepositoryOrigin = grafo.findById(origin);
-                VerticesRepository verticeRepositoryDestiny = grafo.findById(destiny);
+                VerticesRepository verticeRepositoryOrigin = grafo.findById(edgeCreated.getOrigin());
+                VerticesRepository verticeRepositoryDestiny = grafo.findById(edgeCreated.getDestiny());
 
                 Vertices verticeOrigin = verticeRepositoryOrigin.getVertices().getFirst();
-                Vertices verticeDestiny = verticeRepositoryDestiny.getVertices().getFirst();;
+                Vertices verticeDestiny = verticeRepositoryDestiny.getVertices().getFirst();
 
                 verticeRepositoryOrigin.addAdjacent(verticeDestiny);
                 verticeRepositoryDestiny.addAdjacent(verticeOrigin);
 
-            } while (edgeDocLine != null);
-
-            System.out.println(grafo);
-
-        } catch (IOException e) {
+            } while (line != null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return list;
     }
-
-    private Vertices createVertice(int id, String name) {
-        return new Vertices(id, name);
-    }
-
-    private Edges createEdge(int id, int origin, int destiny, double weight) {
-        return new Edges(id, origin, destiny, weight);
-    }
-
-
 }
