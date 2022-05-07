@@ -24,7 +24,7 @@ public class EdgesRepository {
     public Edges finEdgesByOriginAndDestiny(int origin, int destiny) {
         try {
             for (Edges edge : edges) {
-                if (compair(edge.getOrigin(), edge.getDestiny(), origin, destiny)) {
+                if (compair(edge.getOrigin(), edge.getDestination(), origin, destiny)) {
                     return edge;
                 }
             }

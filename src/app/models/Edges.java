@@ -15,19 +15,19 @@ public class Edges {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public int getOrigin() {
-        return origin;
+        return this.origin;
     }
 
-    public int getDestiny() {
-        return destiny;
+    public int getDestination() {
+        return this.destiny;
     }
 
     public double getWeight() {
-        return weight;
+        return this.weight;
     }
 
     public void setId(int id) {
@@ -38,7 +38,7 @@ public class Edges {
         this.origin = origin;
     }
 
-    public void setDestiny(int destiny) {
+    public void setDestination(int destiny) {
         this.destiny = destiny;
     }
 

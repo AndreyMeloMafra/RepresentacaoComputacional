@@ -14,7 +14,7 @@ import app.repositories.VerticesRepository;
 
 /**
  *
- * @author andrey
+ * @author andrey (lindo)
  */
 public class Reader {
 
@@ -106,7 +106,7 @@ public class Reader {
                 edgesRepository.add(edgeCreated);
 
                 VerticesRepository verticeRepositoryOrigin = grafo.findById(edgeCreated.getOrigin());
-                VerticesRepository verticeRepositoryDestiny = grafo.findById(edgeCreated.getDestiny());
+                VerticesRepository verticeRepositoryDestiny = grafo.findById(edgeCreated.getDestination());
 
                 Vertices verticeOrigin = verticeRepositoryOrigin.getVertices().getFirst();
                 Vertices verticeDestiny = verticeRepositoryDestiny.getVertices().getFirst();
