@@ -1,17 +1,18 @@
 package app.repositories;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import app.models.Vertices;
 
 public class VerticesRepository {
-    private LinkedList<Vertices> vertices = new LinkedList<Vertices>();
+    private LinkedList<Vertices> vertices = new LinkedList<>();
 
     public VerticesRepository(Vertices initialVertice) {
         vertices.add(initialVertice);
     }
 
-    public LinkedList<Vertices> getVertices() {
+    public List<Vertices> getVertices() {
         return vertices;
     }
 
@@ -32,7 +33,7 @@ public class VerticesRepository {
         StringBuilder result = new StringBuilder();
 
         for (int iterator = 0; iterator < vertices.size(); iterator++) {
-            if(iterator == 1) {
+            if (iterator == 1) {
                 result.append("Vertices adjacentes: ");
             }
             result.append("[");

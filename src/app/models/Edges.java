@@ -62,16 +62,4 @@ public class Edges {
 
         return result.toString();
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Edges)) {
-            return false;
-        }
-
-        Edges objectToCompair = (Edges) obj;
-
-        return objectToCompair.origin == this.origin
-                && objectToCompair.destiny == this.destiny;
-    }
 }

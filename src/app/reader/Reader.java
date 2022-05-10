@@ -74,7 +74,7 @@ public class Reader {
         try {
             do {
                 line = reader.readLine();
-                
+
                 if (line == null) {
                     break;
                 }
@@ -83,7 +83,7 @@ public class Reader {
                 VerticesRepository verticeRepository = new VerticesRepository(vertice);
 
                 grafo.addMainVertice(verticeRepository);
-            } while (line != null);
+            } while (!line.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,13 +108,13 @@ public class Reader {
                 VerticesRepository verticeRepositoryOrigin = grafo.findById(edgeCreated.getOrigin());
                 VerticesRepository verticeRepositoryDestiny = grafo.findById(edgeCreated.getDestiny());
 
-                Vertices verticeOrigin = verticeRepositoryOrigin.getVertices().getFirst();
-                Vertices verticeDestiny = verticeRepositoryDestiny.getVertices().getFirst();
+                Vertices verticeOrigin = verticeRepositoryOrigin.getVertices().get(0);
+                Vertices verticeDestiny = verticeRepositoryDestiny.getVertices().get(0);
 
                 verticeRepositoryOrigin.addAdjacent(verticeDestiny);
                 verticeRepositoryDestiny.addAdjacent(verticeOrigin);
 
-            } while (line != null);
+            } while (!line.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
         }
