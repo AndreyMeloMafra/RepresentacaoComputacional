@@ -21,10 +21,10 @@ public class EdgesRepository {
         edges.remove(edgeToAdd);
     }
 
-    public Edges finEdgesByOriginAndDestiny(int origin, int destiny) {
+    public Edges finEdgesByOriginAndDestiny(int originToCompair, int destinyToCompair) {
         try {
             for (Edges edge : edges) {
-                if (compair(edge.getOrigin(), edge.getDestination(), origin, destiny)) {
+                if (compair(edge.getOrigin(), edge.getDestiny(), originToCompair, destinyToCompair)) {
                     return edge;
                 }
             }

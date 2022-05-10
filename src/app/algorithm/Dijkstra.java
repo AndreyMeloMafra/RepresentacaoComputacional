@@ -3,6 +3,7 @@ package app.algorithm;
 import app.algorithm.base.BaseAlgorithm;
 import app.models.Edges;
 import app.models.Vertices;
+import app.repositories.VerticesRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,23 +24,25 @@ public class Dijkstra extends BaseAlgorithm {
         return this.distance;
     }
 
-    public void execute(Vertices originVertices) {
+    public void execute(Vertices originVertices, VerticesRepository repository) {
         //Executa o algoritmo de djsidjfdgfhod (eu não sei escrever)
         originVertices.setMinDistance(0);
         if (originVertices != null) { //pode ser que essa checagem aqui quebre alguma coisa vu
             this.queue.add(originVertices);
         }
-        while (!(this.queue.isEmpty())) {
-            Vertices vertice = this.queue.poll(); //???? mano que
+        while (!this.queue.isEmpty()) {
+            Vertices vertice = this.queue.poll(); //???? mano que // kjfhksjfhkajs ele pega e remove o primeiro elemento da fila
+            
             for (Edges edges : vertice.getEdges()) {
-                Vertices ver = edges.getDestination(); //falta ver como a gente vai fazer essa implementação daqui
+                Vertices destinyVertice = repository.getVerticeById(edges.getDestiny()); //falta ver como a gente vai fazer essa implementação daqui
                 double weight = edges.getWeight();
                 double minDistance = vertice.getMinDistance() + weight;
-                if (minDistance < ver.getMinDistance()) {
+
+                if (minDistance < destinyVertice.getMinDistance()) {
                     this.queue.remove(vertice);
-                    ver.setPreviousVertices(vertice);
-                    ver.setMinDistance(minDistance);
-                    this.queue.add(ver);
+                    destinyVertice.setPreviousVertices(vertice);
+                    destinyVertice.setMinDistance(minDistance);
+                    this.queue.add(destinyVertice);
                 }
             }
         }

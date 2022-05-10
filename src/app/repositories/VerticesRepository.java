@@ -28,6 +28,17 @@ public class VerticesRepository {
         return vertices.getFirst().getId();
     }
 
+    public Vertices getVerticeById(int id) {
+        Vertices verticeToReturn = null;
+        for (Vertices vertice : vertices) {
+            if (vertice.getId() == id) {
+                verticeToReturn = vertice;
+            }
+        }
+
+        return verticeToReturn;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

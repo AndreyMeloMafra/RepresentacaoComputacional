@@ -18,13 +18,24 @@ import app.repositories.VerticesRepository;
  */
 public class Reader {
 
-    final File verticesDoc = new File("./src/app/reader/vertices.csv");
-    final File edgesDoc = new File("./src/app/reader/edges.csv");
+    String verticeFile;
+    String edgeFile;
+
+    File verticesDoc = new File("./src/app/reader/vertices.csv");
+    File edgesDoc = new File("./src/app/reader/edges.csv");
 
     FileReader verticeDoc;
     BufferedReader readvertices;
     FileReader edgeDoc;
     BufferedReader readEdges;
+
+    // public Reader(String verticeFile, String edgeFile) {
+    //     this.verticeFile = verticeFile;
+    //     this.edgeFile = edgeFile;
+
+    //     // this.verticesDoc = new File(verticeFile);
+    //     // this.edgesDoc = new File(edgeFile);
+    // }
 
     public Reader() {
         try {
@@ -106,13 +117,16 @@ public class Reader {
                 edgesRepository.add(edgeCreated);
 
                 VerticesRepository verticeRepositoryOrigin = grafo.findById(edgeCreated.getOrigin());
-                VerticesRepository verticeRepositoryDestiny = grafo.findById(edgeCreated.getDestination());
+                VerticesRepository verticeRepositoryDestiny = grafo.findById(edgeCreated.getDestiny());
 
                 Vertices verticeOrigin = verticeRepositoryOrigin.getVertices().get(0);
                 Vertices verticeDestiny = verticeRepositoryDestiny.getVertices().get(0);
 
                 verticeRepositoryOrigin.addAdjacent(verticeDestiny);
                 verticeRepositoryDestiny.addAdjacent(verticeOrigin);
+
+                verticeOrigin.addNeighbour(edgeCreated);
+                verticeDestiny.addNeighbour(edgeCreated);
 
             } while (!line.isEmpty());
         } catch (Exception e) {

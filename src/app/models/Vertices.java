@@ -42,8 +42,8 @@ public class Vertices {
         return this.previousVertices;
     }
 
-    public Vertices setPreviousVertices(Vertices previousVertices) {
-        return this.previousVertices = previousVertices;
+    public void setPreviousVertices(Vertices previousVertices) {
+        this.previousVertices = previousVertices;
     }
 
     public void setId(int id) {
@@ -58,8 +58,8 @@ public class Vertices {
         return this.minDistance;
     }
 
-    public double setMinDistance(double minDistance) {
-        return this.minDistance = minDistance;
+    public void setMinDistance(double minDistance) {
+        this.minDistance = minDistance;
     }
 
     @Override
@@ -74,5 +74,16 @@ public class Vertices {
         result.append("\n");
 
         return result.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Vertices)) {
+            return false;
+        }
+
+        Vertices vertice = (Vertices) obj;
+
+        return vertice.id == this.id && vertice.name == this.name;
     }
 }

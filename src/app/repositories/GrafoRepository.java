@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import app.exceptions.VerticeNotFoundException;
+import app.models.Vertices;
 
 public class GrafoRepository {
     LinkedList<VerticesRepository> vertices = new LinkedList<>();
@@ -35,6 +36,17 @@ public class GrafoRepository {
 
     private boolean compair(int id, int idToCompair) {
         return id == idToCompair;
+    }
+
+    public VerticesRepository getVerticeById(int id) {
+        VerticesRepository verticeToReturn = null;
+        for (VerticesRepository vertice : vertices) {
+            if (vertice.getFirstElementId() == id) {
+                verticeToReturn = vertice;
+            }
+        }
+
+        return verticeToReturn;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Edges {
         return this.origin;
     }
 
-    public int getDestination() {
+    public int getDestiny() {
         return this.destiny;
     }
     public double getWeight() {
@@ -38,7 +38,7 @@ public class Edges {
         this.origin = origin;
     }
 
-    public void setDestination(int destiny) {
+    public void setDestiny(int destiny) {
         this.destiny = destiny;
     }
 
