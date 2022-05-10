@@ -1,5 +1,6 @@
 package app.models;
 
+
 public class Edges {
 
     private int id;
@@ -25,7 +26,6 @@ public class Edges {
     public int getDestination() {
         return this.destiny;
     }
-
     public double getWeight() {
         return this.weight;
     }
