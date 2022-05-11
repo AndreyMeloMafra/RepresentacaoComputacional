@@ -1,5 +1,6 @@
 package app;
 
+import java.util.List;
 import java.util.Scanner;
 
 import app.algorithm.BuscaEmExtensao;
@@ -15,9 +16,8 @@ public class App {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        // Reader visaoComputacional = new Reader("./src/app/reader/vertices.csv",
-        // "./src/app/reader/edges.csv");
         Reader visaoComputacional = new Reader();
+
         int menuOption = 0;
         int verticeStartInput = 0;
         int verticeEndInput = 0;
@@ -42,25 +42,27 @@ public class App {
         } while (menuOption > 3 || menuOption < 1);
 
         do {
-            System.out.print("Escolha o  vertice de partida: ");
-            verticeStartInput = scanner.nextInt();
-
-            System.out.print("Escolha o  vertice de chegada: ");
-            verticeEndInput = scanner.nextInt();
+            if(menuOption != 2) {
+                System.out.print("Escolha o  vertice de partida: ");
+                verticeStartInput = scanner.nextInt();
+                
+            }
+                System.out.print("Escolha o  vertice de chegada: ");
+                verticeEndInput = scanner.nextInt();
         } while (verticeStartInput > grafo.getVertices().size() && verticeEndInput < grafo.getVertices().size());
 
         switch (menuOption) {
             case 1:
                 BuscaEmExtensao buscaEmExtensao = new BuscaEmExtensao();
 
-                Vertices verticeFound = buscaEmExtensao.execute(verticeStartInput, verticeEndInput,
+                buscaEmExtensao.execute(verticeStartInput, verticeEndInput,
                         grafo.getVertices());
-                printResult(verticeFound);
                 break;
             case 2:
                 Dijkstra dijkstra = new Dijkstra();
-                // dijkstra.execute(grafo.getVertices().get(verticeStartInput).getVerticeById(0),
-                // grafo.getVertices().get(verticeStartInput));
+                dijkstra.execute(grafo.getVertices());
+                List<Vertices> vertices = dijkstra.getShortestPath(verticeEndInput, grafo.getVertices());
+                printList(vertices);
                 break;
             default:
                 break;
@@ -68,13 +70,9 @@ public class App {
         scanner.close();
     }
 
-    private static void printResult(Vertices vertices) {
-        System.out.print("Resultado da busca: ");
-        if (vertices == null) {
-            System.out.print("Vértice não encontrado");
-        } else {
-            System.out.print(vertices);
+    private static void printList(List<Vertices> vertices) {
+        for (Vertices vertice : vertices) {
+            System.out.println("Caminho: " + vertice.getName());
         }
-
     }
 }

@@ -24,17 +24,17 @@ public class Dijkstra extends BaseAlgorithm {
         return this.distance;
     }
 
-    public void execute(Vertices originVertices, VerticesRepository repository) {
-        //Executa o algoritmo de djsidjfdgfhod (eu não sei escrever)
+    public void execute(List<VerticesRepository> verticesList) {
+        Vertices originVertices = findInList(verticesList, 4);
         originVertices.setMinDistance(0);
-        if (originVertices != null) { //pode ser que essa checagem aqui quebre alguma coisa vu
+        if (originVertices != null) {
             this.queue.add(originVertices);
         }
         while (!this.queue.isEmpty()) {
-            Vertices vertice = this.queue.poll(); //???? mano que // kjfhksjfhkajs ele pega e remove o primeiro elemento da fila
+            Vertices vertice = this.queue.poll(); 
             
             for (Edges edges : vertice.getEdges()) {
-                Vertices destinyVertice = repository.getVerticeById(edges.getDestiny()); //falta ver como a gente vai fazer essa implementação daqui
+                Vertices destinyVertice = findInList(verticesList, edges.getDestiny()); 
                 double weight = edges.getWeight();
                 double minDistance = vertice.getMinDistance() + weight;
 
@@ -48,8 +48,10 @@ public class Dijkstra extends BaseAlgorithm {
         }
     }
 
-    public List<Vertices> getShortestPath(Vertices destination) {
+    public List<Vertices> getShortestPath(int destinationId, List<VerticesRepository> verticesList) {
         List<Vertices> path = new ArrayList<>();
+        Vertices destination = findInList(verticesList, destinationId);
+
         for (Vertices vertices = destination; vertices != null; vertices = vertices.getPreviousVertices()) {
             path.add(vertices);
         }

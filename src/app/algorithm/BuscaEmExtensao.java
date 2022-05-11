@@ -12,18 +12,15 @@ public class BuscaEmExtensao extends BaseAlgorithm {
     LinkedList<Vertices> markeds = new LinkedList<>();
     LinkedList<Vertices> queue = new LinkedList<>();
 
-    public Vertices execute(int startSearch, int verticeIdToFind, List<VerticesRepository> verticesList) {
+    public void execute(int startSearch, int verticeIdToFind, List<VerticesRepository> verticesList) {
         Vertices verticeActual = findInList(verticesList, startSearch);
         markeds.add(verticeActual);
         queue.add(verticeActual);
 
-        Vertices visited;
+        Vertices visited = queue.get(0);
+        System.out.println("Partida: " + visited.getName());
         while (!queue.isEmpty()) {
             visited = queue.get(0);
-
-            if (visited.getId() == verticeIdToFind) {
-                return visited;
-            }
 
             for (int iterator = 0; iterator < visited.getEdges().size(); iterator++) {
 
@@ -32,13 +29,10 @@ public class BuscaEmExtensao extends BaseAlgorithm {
                     idToSearch = visited.getEdges().get(iterator).getOrigin();
                 }
                 Vertices nextVertice = findInList(verticesList, idToSearch);
-                if (!nextVertice.equals(visited)) {
-
-                    if (nextVertice.getId() == verticeIdToFind) {
-                        return nextVertice;
-                    }
-
+                
+                if (!nextVertice.equals(visited)) {      
                     if (!markeds.contains(nextVertice)) {
+                        System.out.println("Proximo: " + nextVertice.getName());
                         markeds.add(nextVertice);
                         queue.add(nextVertice);
                     }
@@ -47,20 +41,5 @@ public class BuscaEmExtensao extends BaseAlgorithm {
 
             queue.remove(0);
         }
-
-        visited = null;
-        return visited;
-    }
-
-    public Vertices findInList(List<VerticesRepository> list, int verticeId) {
-        Vertices vertices = null;
-
-        for (VerticesRepository vertice : list) {
-            if (vertice.getFirstElementId() == verticeId) {
-                vertices = vertice.getVertices().get(0);
-            }
-        }
-
-        return vertices;
     }
 }

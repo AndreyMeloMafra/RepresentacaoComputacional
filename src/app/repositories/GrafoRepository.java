@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import app.exceptions.VerticeNotFoundException;
-import app.models.Vertices;
 
 public class GrafoRepository {
     LinkedList<VerticesRepository> vertices = new LinkedList<>();

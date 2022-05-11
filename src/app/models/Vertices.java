@@ -3,22 +3,22 @@ package app.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vertices {
+public class Vertices implements Comparable<Vertices> {
 
-    private int id;
+    private Integer id;
     private String name;
     private List<Edges> edges;
     private boolean alreadyVisited;
     private Vertices previousVertices;
     private double minDistance = Double.MAX_VALUE; //começa com a disância infinita
 
-    public Vertices(int id, String name) {
+    public Vertices(Integer id, String name) {
         this.id = id;
         this.name = name;
         this.edges = new ArrayList<>();
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -85,5 +85,10 @@ public class Vertices {
         Vertices vertice = (Vertices) obj;
 
         return vertice.id == this.id && vertice.name == this.name;
+    }
+
+    @Override
+    public int compareTo(Vertices o) {
+        return this.getId().compareTo(o.getId());
     }
 }
