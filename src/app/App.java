@@ -42,13 +42,11 @@ public class App {
         } while (menuOption > 3 || menuOption < 1);
 
         do {
-            if(menuOption != 2) {
-                System.out.print("Escolha o  vertice de partida: ");
-                verticeStartInput = scanner.nextInt();
-                
-            }
-                System.out.print("Escolha o  vertice de chegada: ");
-                verticeEndInput = scanner.nextInt();
+            System.out.print("Escolha o  vertice de partida: ");
+            verticeStartInput = scanner.nextInt();
+            
+            System.out.print("Escolha o  vertice de chegada: ");
+            verticeEndInput = scanner.nextInt();
         } while (verticeStartInput > grafo.getVertices().size() && verticeEndInput < grafo.getVertices().size());
 
         switch (menuOption) {
@@ -60,7 +58,7 @@ public class App {
                 break;
             case 2:
                 Dijkstra dijkstra = new Dijkstra();
-                dijkstra.execute(grafo.getVertices());
+                dijkstra.execute(verticeStartInput, grafo.getVertices());
                 List<Vertices> vertices = dijkstra.getShortestPath(verticeEndInput, grafo.getVertices());
                 printList(vertices);
                 break;

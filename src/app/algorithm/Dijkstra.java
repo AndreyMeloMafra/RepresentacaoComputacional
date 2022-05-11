@@ -24,8 +24,8 @@ public class Dijkstra extends BaseAlgorithm {
         return this.distance;
     }
 
-    public void execute(List<VerticesRepository> verticesList) {
-        Vertices originVertices = findInList(verticesList, 4);
+    public void execute(int startIndex, List<VerticesRepository> verticesList) {
+        Vertices originVertices = findInList(verticesList, startIndex);
         originVertices.setMinDistance(0);
         if (originVertices != null) {
             this.queue.add(originVertices);
